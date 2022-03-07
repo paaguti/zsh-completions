@@ -94,7 +94,6 @@ _vboxostypes() {
 # Guess options for this commands
 _vboxopts_controlvm() { _vboxcommandoptions controlvm }
 _vboxopts_modifyvm() { _vboxcommandoptions modifyvm }
-_vboxopts_export() { _vboxcommandoptions export }
 
 _vboxmanage() {
 	local -a _1st_arguments
@@ -196,7 +195,10 @@ _vboxmanage() {
 		export)
 			_arguments \
 				:machine:_vboxmachines \
-				:export_option:_vboxopts_export
+				'--output:ovf file:_files -g \*.{ovf,ova}' \
+				'-o:ovf file:_files -g \*.{ovf,ova}' \
+        '--manifest' \
+        '--options:manifest iso nomacs nomacsbutnat:(manifest iso nomacs nomacsbutnat)'
 		;;
 		startvm)
 			_arguments \
@@ -279,6 +281,11 @@ _vboxmanage() {
         '--netname:natnet:_vboxnatnets' \
         '--dhcp:bool:(on off)' \
         '--ipv6:bool:(on off)' \
+        '--network:prefix:' \
+        '--loopback-4:lrule:' \
+        '--loopback-6:lrule6:' \
+        '--port-forward-4:rule:' \
+        '--port-forward-6:rule6:' \
         '--enable' \
         '--disable'
       ;;
